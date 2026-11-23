@@ -25,10 +25,25 @@ Macro F1 on the test set:
 
 | Model | Trained on | EN | ES |
 |---|---|---|---|
-| TF-IDF + LogReg | en | 0.888 | |
-| TF-IDF + LogReg | en + es | | |
-| mBERT | en | | |
-| mBERT | en + es | | |
+| TF-IDF + LogReg | en | 0.888 | 0.454 |
+| TF-IDF + LogReg | en + es | 0.891 | 0.882 |
+| mBERT | en | 0.919 | 0.769 |
+| mBERT | en + es | 0.914 | 0.893 |
+
+- Trained only on English, TF-IDF drops to 0.45 on Spanish, while mBERT still gets 0.77 without seeing any Spanish example.
+- With both languages mBERT is the best on Spanish, but only slightly better than TF-IDF.
+- Micro F1 for mBERT is around 0.98 in English and 0.97 in Spanish (trained on both).
+
+Some predictions with the en + es model:
+
+```
+Ransomware gang encrypts hospital servers and demands bitcoin
+  -> ransomware (0.98)
+Filtrados los datos personales de dos millones de clientes de una aerolínea
+  -> data_breach (0.94)
+Ataque DDoS deja sin servicio las webs de varios ministerios
+  -> ddos (0.91), cyber_attack (0.98)
+```
 
 ## Notes
 
