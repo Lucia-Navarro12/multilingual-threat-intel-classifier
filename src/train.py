@@ -6,6 +6,7 @@ Examples:
 """
 import argparse
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -63,6 +64,8 @@ def main() -> None:
         m = metrics(pred.label_ids.astype(int), (probs >= args.threshold).astype(int))
         return {"f1_micro": m["f1_micro"], "f1_macro": m["f1_macro"]}
 
+    # warmup = 10% of the training steps
+    total_steps = math.ceil(len(train_ds) / args.batch_size) * args.epochs
     training_args = TrainingArguments(
         output_dir=f"models/{tag}",
         num_train_epochs=args.epochs,
@@ -70,7 +73,7 @@ def main() -> None:
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=64,
         weight_decay=0.01,
-        warmup_ratio=0.1,
+        warmup_steps=int(0.1 * total_steps),
         eval_strategy="epoch",
         save_strategy="epoch",
         save_total_limit=1,
