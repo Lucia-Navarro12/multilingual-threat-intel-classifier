@@ -1,6 +1,6 @@
 # Multilingual Threat Intelligence Classifier
 
-Classifying cybersecurity news by threat type (ransomware, data breach, DDoS...) in English and Spanish, fine-tuning multilingual BERT.
+A small project to classify cybersecurity news by threat type (ransomware, data breach, DDoS...) in English and Spanish using multilingual BERT.
 
 I wanted to see if a model trained only on English news can also classify Spanish news, since most labelled security data is in English.
 
@@ -30,11 +30,10 @@ Macro F1 on the test set:
 | mBERT | en | 0.919 | 0.769 |
 | mBERT | en + es | 0.914 | 0.893 |
 
-- Trained only on English, TF-IDF drops to 0.45 on Spanish, while mBERT still gets 0.77 without seeing any Spanish example.
-- With both languages mBERT is the best on Spanish, but only slightly better than TF-IDF.
-- Micro F1 for mBERT is around 0.98 in English and 0.97 in Spanish (trained on both).
+- Trained only on English, TF-IDF gets 0.45 on Spanish and mBERT gets 0.77, without seeing any Spanish example.
+- Trained on both languages, the two models are close on Spanish (0.88 and 0.89).
 
-Some predictions with the en + es model:
+Some examples with mBERT trained on both languages:
 
 ```
 Ransomware gang encrypts hospital servers and demands bitcoin
