@@ -1,7 +1,7 @@
-"""Machine-translate the English splits into Spanish with MarianMT (Helsinki-NLP/opus-mt-en-es).
+"""Translate the English splits to Spanish with opus-mt-en-es.
 
-Each split is translated on its own, so a translated article never leaks into another split.
-Run on a GPU (e.g. Google Colab): ~2,900 short texts take a few minutes.
+Each split is translated separately so nothing leaks between splits.
+Better on GPU.
 """
 import argparse
 from pathlib import Path
@@ -19,7 +19,7 @@ def translate(texts: list[str], tok, model, device, batch_size: int) -> list[str
         batch = tok(texts[i : i + batch_size], return_tensors="pt", padding=True,
                     truncation=True, max_length=512).to(device)
         with torch.no_grad():
-            gen = model.generate(**batch, max_new_tokens=512, num_beams=4)
+            gen = model.generate(**batch, num_beams=4)
         out.extend(tok.batch_decode(gen, skip_special_tokens=True))
         print(f"  {min(i + batch_size, len(texts))}/{len(texts)}", end="\r")
     print()
