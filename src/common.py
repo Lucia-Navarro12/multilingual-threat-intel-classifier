@@ -1,4 +1,4 @@
-"""Shared helpers: loading splits and computing multi-label metrics."""
+"""Helpers for loading data and metrics."""
 from pathlib import Path
 
 import numpy as np

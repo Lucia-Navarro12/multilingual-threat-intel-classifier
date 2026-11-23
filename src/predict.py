@@ -1,4 +1,4 @@
-"""Classify new headlines with a fine-tuned model.
+"""Predict labels for new headlines.
 
   python src/predict.py --model-dir models/bert-base-multilingual-cased_train-en-es/best \
       "Ransomware attack paralyses hospital systems" "Filtrados los datos de 2 millones de clientes"

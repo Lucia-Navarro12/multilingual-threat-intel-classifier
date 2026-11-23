@@ -1,8 +1,8 @@
-"""Fine-tune a multilingual transformer for multi-label threat-type classification.
+"""Fine-tune multilingual BERT (multi-label).
 
-Two experiments (see README):
-  python src/train.py --train-langs en es   # trained on both languages
-  python src/train.py --train-langs en      # zero-shot cross-lingual: never sees Spanish
+Examples:
+  python src/train.py --train-langs en es   # English + Spanish
+  python src/train.py --train-langs en      # only English
 """
 import argparse
 import json

@@ -1,7 +1,7 @@
-"""Download the English cybersecurity news dataset and build multi-label train/val/test splits.
+"""Download the dataset and make train/val/test splits.
 
 Source: NewsDataHub/cybersecurity-news-dataset-english-3000 (Hugging Face, CC BY 4.0).
-Each article has six boolean threat-type flags, used here as multi-label targets.
+The six mentions_* columns are used as labels.
 """
 import argparse
 import urllib.request
@@ -15,7 +15,7 @@ PARQUET_URL = (
     "/parquet/default/train/0.parquet"
 )
 
-# Ordered from rarest to most common: used to pick a "primary" label for stratified splitting.
+# from rarest to most common (used for stratifying)
 LABELS = ["ddos", "vulnerability", "ransomware", "hacking", "cyber_attack", "data_breach"]
 
 
@@ -45,9 +45,9 @@ def main() -> None:
         df[label] = df[f"mentions_{label}"].astype(str).eq("True").astype(int)
 
     df = df.drop_duplicates(subset="text")
-    df = df[df[LABELS].sum(axis=1) > 0]  # drop articles with no threat type
+    df = df[df[LABELS].sum(axis=1) > 0]  # remove articles with no label
 
-    # Stratify on the rarest label present so DDoS / vulnerability appear in every split.
+    # stratify by the rarest label so every split has some ddos / vulnerability
     df["primary"] = df[LABELS].idxmax(axis=1)
 
     train, rest = train_test_split(df, test_size=0.30, stratify=df["primary"], random_state=args.seed)

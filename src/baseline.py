@@ -1,4 +1,4 @@
-"""Classical baseline: TF-IDF + one-vs-rest logistic regression, evaluated per language."""
+"""Baseline: TF-IDF + logistic regression."""
 import argparse
 import json
 from pathlib import Path
